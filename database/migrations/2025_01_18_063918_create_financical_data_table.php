@@ -15,10 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('symbol');
             $table->string('name');
-            $table->double('price');
-            $table->integer('volume');
-            $table->double('eps')->nullable();
             $table->double('open');
+            $table->jsonb('financial_details');
             $table->double('previousClose');
             $table->timestamps();
         });

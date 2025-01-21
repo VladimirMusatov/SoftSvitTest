@@ -46,10 +46,18 @@ class MainController extends Controller
 
         if(!$api_responce['success'])
         {
-            return redirect()->back()->withErrors('msg', $api_responce['data']); 
+            return back()->withErrors($api_responce['message']); 
         }
         
         $api_responce = $api_responce['data'];
+
+        $financial_details = [
+            'eps' => $api_responce['eps'],
+            'price' => $api_responce['price'],
+            'volume' => $api_responce['volume'],
+        ];
+
+        $financial_details = json_encode($financial_details);
 
         DB::table('financical_data')->updateOrInsert(
             [
@@ -58,14 +66,12 @@ class MainController extends Controller
             [
                 'symbol' => $api_responce['symbol'],
                 'name' => $api_responce['name'],
-                'price' => $api_responce['price'],
-                'volume' => $api_responce['volume'],
-                'eps' => $api_responce['eps'],
+                'financial_details' => $financial_details,
                 'open' => $api_responce['open'],
                 'previousClose' => $api_responce['previousClose'],
             ]
         );
 
-        return redirect()->back();
+        return redirect()->back()->with(['message' => 'data added successfully']);
     }
 }

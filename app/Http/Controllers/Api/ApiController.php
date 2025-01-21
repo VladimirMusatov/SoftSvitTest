@@ -31,6 +31,15 @@ class ApiController extends Controller
 
         $response = json_decode($response);
 
+
+        if(empty($response))
+        {
+            return [
+                'success' => false,
+                'message' => 'response is empty'
+            ];
+        }
+
         $response = collect($response);
 
         $api_responce = $response->first();
@@ -82,7 +91,7 @@ class ApiController extends Controller
         if ($err) {
             return [
                 'success' => false,
-                'data' => "cURL Error #:" . $err
+                'message' => "cURL Error #:" . $err
             ];
         }
 
@@ -93,7 +102,7 @@ class ApiController extends Controller
         if(empty($response['quoteResponse']->result)){
             return [
                 'success' => false,
-                'data' => 'response is empty',
+                'message' => 'response is empty',
             ];
         }
         else{

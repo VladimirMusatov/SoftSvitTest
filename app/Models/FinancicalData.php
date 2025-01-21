@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class FinancicalData extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'financial_details' => 'array',
+    ];
 }

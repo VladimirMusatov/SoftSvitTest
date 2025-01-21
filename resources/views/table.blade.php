@@ -28,9 +28,9 @@
                 <tr>
                     <th scope="col">{{$item->symbol}}</th>
                     <th scope="col">{{$item->name}}</th>
-                    <th scope="col">{{$item->price}}</th>
-                    <th scope="col">{{$item->volume}}</th>
-                    <th scope="col">{{$item->eps}}</th>
+                    <th scope="col">{{$item->financial_details['price']}}</th>
+                    <th scope="col">{{$item->financial_details['volume']}}</th>
+                    <th scope="col">{{$item->financial_details['eps']}}</th>
                     <th scope="col">{{$item->open}}</th>
                     <th scope="col">{{$item->previousClose}}</th>
                 </tr>
