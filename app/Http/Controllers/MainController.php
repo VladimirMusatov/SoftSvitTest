@@ -15,11 +15,31 @@ class MainController extends Controller
         return view('main');
     }
 
-    public function table()
+    public function table(Request $request)
     {
-        $fin_data = FinancicalData::all();
+        $query = FinancicalData::query();
 
-        return view('table', ['fin_data' => $fin_data]);
+        $filters = $request->only(['symbol', 'price_start', 'price_end','name', 'volume_start', 'volume_end']);
+
+        $filter_conditions = [
+            ['symbol', '=', $filters['symbol'] ?? null],
+            ['financial_details->price', '>=', $filters['price_start'] ?? null],
+            ['financial_details->price', '<=', $filters['price_end'] ?? null],
+            ['name', 'like', $filters['name'] ?? null],
+            ['financial_details->volume', '>=', $filters['volume_start'] ?? null],
+            ['financial_details->volume', '<=', $filters['volume_end'] ?? null],
+        ];
+
+        foreach ($filter_conditions as $condition) {
+            if (!empty($condition[2])) {
+                $query->where($condition[0], $condition[1], $condition[2]);
+            }
+        }
+    
+        $fin_data = $query->get();
+
+        return view('table', ['fin_data' => $fin_data, 'filters' => $filters]);
+
     }
 
     public function post_request(Request $request)

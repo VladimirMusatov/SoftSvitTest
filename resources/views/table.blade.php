@@ -24,6 +24,16 @@
                 </tr>
             </thead>
             <tbody>
+                <form method="GET" action="{{route('table')}}">
+                    @csrf
+                    <tr>
+                        <th scope="col"><input value="{{ old('symbol', $filters['symbol'] ?? '') }}" name="symbol"></th>
+                        <th scope="col"><input value="{{ old('name', $filters['name'] ?? '') }}" name="name"></th>
+                        <th scope="col">from:<input value="{{ old('price_start', $filters['price_start'] ?? '') }}" name="price_start"><br>to:<input  value="{{ old('price_end', $filters['price_end'] ?? '') }}" name="price_end"></th>
+                        <th scope="col">from:<input value="{{ old('volume_start', $filters['volume_start'] ?? '') }}" name="volume_start"><br>to:<input  value="{{ old('volume_end', $filters['volume_end'] ?? '') }}" name="volume_end"></th>
+                        <th colspan="3"scope="col"><button type="submit" class="btn btn-primary">Apply Filter</button></th>
+                    </tr>
+                </form>
                 @foreach($fin_data as $item)
                 <tr>
                     <th scope="col">{{$item->symbol}}</th>
