@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 use App\Models\FinancicalData;
 
@@ -12,7 +13,15 @@ class MainController extends Controller
 {
     public function index()
     {
-        return view('main');
+
+        $status = Redis::get('api_switcher');
+
+        if(!$status)
+        {
+            Redis::set('api_switcher', 'rapid');
+        }
+
+        return view('main', ['status' => $status]);
     }
 
     public function table(Request $request)
@@ -63,6 +72,8 @@ class MainController extends Controller
                 $api_responce = $api_controller->financial_data($params);
                 break;
         }
+
+        Redis::set('api_switcher', $request->api);
 
         if(!$api_responce['success'])
         {

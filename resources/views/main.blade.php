@@ -24,13 +24,13 @@
         @csrf
         <div class="mt-3">
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="api" value="financial_data" id="flexRadioDefault1">
+                <input class="form-check-input" type="radio" name="api" value="financial_data" id="flexRadioDefault1" @if($status == "financial_data") checked @endif>
                 <label class="form-check-label" for="flexRadioDefault1">
                     Financial data for every need
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="api" value="rapid" id="flexRadioDefault2" checked>
+                <input class="form-check-input" type="radio" name="api" value="rapid" id="flexRadioDefault2" @if($status == "rapid") checked @endif>
                 <label class="form-check-label" for="flexRadioDefault2">
                         Rapid
                 </label>
