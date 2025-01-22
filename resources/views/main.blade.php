@@ -11,6 +11,11 @@
     <div class="mt-3">
         <a href="{{route('table')}}" class="btn btn-info">Table</a>
     </div>
+    @if(session()->has('message'))
+        <div class="alert alert-success mt-3" role="alert">
+            {{ session()->get('message')}}
+        </div>
+    @endif
     @if ($errors->any())
         <div class="alert alert-danger mt-3">
             <ul>
